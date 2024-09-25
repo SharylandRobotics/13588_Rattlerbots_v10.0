@@ -46,8 +46,7 @@ android {
             storePassword 'android'
         }
     }
-
-
+    
     defaultConfig {
         signingConfig signingConfigs.debug
         applicationId 'com.qualcomm.ftcrobotcontroller'
