@@ -38,13 +38,15 @@ public class RobotCentric extends LinearOpMode {
 
         //initialize all the hardware using the hardware class. See this? Very simple. Very clean. Very demure.
         robot.init();
-        robot.armPosition = robot.ARM_WINCH_ROBOT;
-        //robot.liftPosition = robot.RETRACT;
-        robot.wrist.setPosition(robot.WRIST_FOLDED_IN);
+
+        //robot.intake.setPower(INTAKE_OFF);
 
         //Send telemetry message to simplify robot waiting;
         //Wait for the game to start (driver presses PLAY)
         waitForStart();
+        //robot.armPosition = RobotHardware.ARM_WINCH_ROBOT;
+        //robot.liftPosition = RobotHardware.RETRACT;
+        //robot.wrist.setPosition(-robot.WRIST_FOLDED_IN);
 
 
         //run until the end of the match (driver presses STOP)
@@ -55,7 +57,7 @@ public class RobotCentric extends LinearOpMode {
             * In this mode the left stick moves the robot fwd and back, the Right stick turns left and right.
             * This way it's also easy to just drive straight, or just turn.
              */
-            axial= gamepad1.left_stick_y * 0.54;
+            axial= gamepad1.left_stick_y * 0.74;
             lateral= gamepad1.left_stick_x * 0.75;
             yaw= -gamepad1.right_stick_x * 0.75;
 
@@ -70,14 +72,16 @@ public class RobotCentric extends LinearOpMode {
             one cycle. Which can cause strange behavior. */
 
             if (gamepad1.a) {
-                robot.intake.setPower(robot.INTAKE_COLLECT);
+                robot.intake.setPower(RobotHardware.INTAKE_COLLECT);
             }
             else if (gamepad1.x) {
-                robot.intake.setPower(robot.INTAKE_OFF);
+                robot.intake.setPower(RobotHardware.INTAKE_OFF);
             }
             else if (gamepad1.b) {
-                robot.intake.setPower(robot.INTAKE_DEPOSIT);
+                robot.intake.setPower(RobotHardware.INTAKE_DEPOSIT);
             }
+
+
 
 
 
@@ -95,62 +99,62 @@ public class RobotCentric extends LinearOpMode {
                 robot.intake.setPower(robot.INTAKE_COLLECT);
             }*/
 
-            else if (gamepad1.left_bumper){
+            if (gamepad1.left_bumper){
                     /* This is about 20° up from the collecting position to clear the barrier
                     Note here that we don't set the wrist position or the intake power when we
                     select this "mode", this means that the intake and wrist will continue what
                     they were doing before we clicked left bumper. */
-                robot.armPosition = robot.ARM_CLEAR_BARRIER;
+                robot.armPosition = RobotHardware.ARM_CLEAR_BARRIER;
             }
 
             else if (gamepad1.y){
                 /* This is the correct height to score the sample in the LOW BASKET */
-                robot.armPosition = robot.ARM_SCORE_SAMPLE_IN_LOW;
+                robot.armPosition = RobotHardware.ARM_SCORE_SAMPLE_IN_LOW;
             }
 
             else if (gamepad1.dpad_left) {
                     /* This turns off the intake, folds in the wrist, and moves the arm
                     back to folded inside the robot. This is also the starting configuration */
-                robot.armPosition = robot.ARM_COLLAPSED_INTO_ROBOT;
-                robot.intake.setPower(robot.INTAKE_OFF);
-                robot.wrist.setPosition(robot.WRIST_FOLDED_OUT);
+                robot.armPosition = RobotHardware.ARM_COLLAPSED_INTO_ROBOT;
+                robot.intake.setPower(RobotHardware.INTAKE_OFF);
+                robot.wrist.setPosition(RobotHardware.WRIST_FOLDED_OUT);
             }
 
             else if (gamepad1.dpad_right){
                 /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
-                robot.armPosition = robot.ARM_SCORE_SPECIMEN;
-                robot.wrist.setPosition(robot.WRIST_FOLDED_IN);
+                robot.armPosition = RobotHardware.ARM_SCORE_SPECIMEN;
+                robot.wrist.setPosition(RobotHardware.WRIST_FOLDED_IN);
             }
 
             else if (gamepad1.dpad_up){
                 /* This sets the arm to vertical to hook onto the LOW RUNG for hanging */
-                robot.armPosition = robot.ARM_ATTACH_HANGING_HOOK;
-                robot.intake.setPower(robot.INTAKE_OFF);
-                robot.wrist.setPosition(robot.WRIST_FOLDED_IN);
+                robot.armPosition = RobotHardware.ARM_ATTACH_HANGING_HOOK;
+                robot.intake.setPower(RobotHardware.INTAKE_OFF);
+                robot.wrist.setPosition(RobotHardware.WRIST_FOLDED_IN);
             }
 
             else if (gamepad1.dpad_down){
                 /* this moves the arm down to lift the robot up once it has been hooked */
-                robot.armPosition = robot.ARM_WINCH_ROBOT;
-                robot.intake.setPower(robot.INTAKE_OFF);
-                robot.wrist.setPosition(robot.WRIST_FOLDED_IN);
+                robot.armPosition = RobotHardware.ARM_COLLAPSED_INTO_ROBOT;
+                robot.intake.setPower(RobotHardware.INTAKE_OFF);
+                robot.wrist.setPosition(RobotHardware.WRIST_FOLDED_IN);
             }
 
             // gamepad2 controls;
             // y extends the arm
             if(gamepad2.y){
                 //robot.armPosition = robot.ARM_WINCH_ROBOT;
-                robot.liftPosition = -robot.EXTEND;
+                robot.liftPosition = RobotHardware.EXTEND;
             }
             // x retracts the arm
             else if (gamepad2.x) {
                 //robot.armPosition = robot.ARM_WINCH_ROBOT;
-                robot.liftPosition = robot.RETRACT;
+                robot.liftPosition = RobotHardware.RETRACT;
 
             }
             else if(gamepad2.a){
-                robot.armPosition = robot.ARM_WINCH_ROBOT;
-                robot.liftPosition = robot.EXTEND;
+                robot.armPosition = RobotHardware.ARM_WINCH_ROBOT;
+                robot.liftPosition = -RobotHardware.EXTEND;
             }
 
 
@@ -162,7 +166,7 @@ public class RobotCentric extends LinearOpMode {
             than the other, it "wins out". This variable is then multiplied by our FUDGE_FACTOR.
             The FUDGE_FACTOR is the number of degrees that we can adjust the arm by with this function. */
 
-            robot.armPositionFudgeFactor = robot.FUDGE_FACTOR * (gamepad1.right_trigger + (-gamepad1.left_trigger));
+            robot.armPositionFudgeFactor = RobotHardware.FUDGE_FACTOR * (gamepad1.right_trigger + (-gamepad1.left_trigger));
 
 
             /* Here we set the target position of our arm to match the variable that was selected
@@ -194,8 +198,8 @@ public class RobotCentric extends LinearOpMode {
             */
 
             // doing the same for the liftDriveliftDrive motor
-            robot.liftDrive.setTargetPosition((int) (robot.liftPosition /*+ robot.armPositionFudgeFactor*/));
-            ((DcMotorEx)  robot.liftDrive).setVelocity(10);
+            robot.liftDrive.setTargetPosition((int) (robot.liftPosition + robot.armPositionFudgeFactor));
+            ((DcMotorEx)  robot.liftDrive).setVelocity(2100);
             robot.liftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
