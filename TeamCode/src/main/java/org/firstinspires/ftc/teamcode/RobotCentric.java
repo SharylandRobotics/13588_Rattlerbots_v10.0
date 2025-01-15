@@ -143,18 +143,18 @@ public class RobotCentric extends LinearOpMode {
             // gamepad2 controls;
             // y extends the arm
             if(gamepad2.y){
-                //robot.armPosition = robot.ARM_WINCH_ROBOT;
+                robot.armPosition = robot.ARM_WINCH_ROBOT;
                 robot.liftPosition = RobotHardware.EXTEND;
             }
             // x retracts the arm
             else if (gamepad2.x) {
-                //robot.armPosition = robot.ARM_WINCH_ROBOT;
-                robot.liftPosition = RobotHardware.RETRACT;
+                robot.armPosition = robot.ARM_WINCH_ROBOT;
+                robot.liftPosition = -RobotHardware.EXTEND;
 
             }
             else if(gamepad2.a){
                 robot.armPosition = RobotHardware.ARM_WINCH_ROBOT;
-                robot.liftPosition = -RobotHardware.EXTEND;
+                robot.liftPosition = -RobotHardware.RETRACT;
             }
 
 
