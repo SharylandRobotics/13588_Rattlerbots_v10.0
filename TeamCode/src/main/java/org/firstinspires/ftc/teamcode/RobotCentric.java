@@ -199,7 +199,7 @@ public class RobotCentric extends LinearOpMode {
 
             // doing the same for the liftDriveliftDrive motor
             robot.liftDrive.setTargetPosition((int) (robot.liftPosition + robot.armPositionFudgeFactor));
-            ((DcMotorEx)  robot.liftDrive).setVelocity(2100);
+            ((DcMotorEx)  robot.liftDrive).setVelocity(500);
             robot.liftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
