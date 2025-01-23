@@ -72,7 +72,7 @@ public class RobotHardware {
     public static final double ARM_SCORE_SAMPLE_IN_LOW   = 160 * ARM_TICKS_PER_DEGREE;
     public static final double ARM_SCORE_SAMPLE_IN_HIGH  = 160 * ARM_TICKS_PER_DEGREE;
     public static final double ARM_ATTACH_HANGING_HOOK   = 120 * ARM_TICKS_PER_DEGREE;
-    public static final double ARM_WINCH_ROBOT           = 10  * ARM_TICKS_PER_DEGREE;
+    public static final double ARM_WINCH_ROBOT           = 18  * ARM_TICKS_PER_DEGREE;
 
     /* Variables to store the speed the intake servo should be set at to intake, and deposit game elements. */
     public static final double INTAKE_COLLECT    = -0.85;
@@ -81,10 +81,10 @@ public class RobotHardware {
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
     public static final double WRIST_FOLDED_IN   = 1.15;
-    public static final double WRIST_FOLDED_OUT  = -0.95;
+    public static final double WRIST_FOLDED_OUT  = -0.5;
 
     /* Variables to store the position that the arm extends and retracts. */
-    public static final double EXTEND  = 150 * LIFT_TICKS_PER_DEGREE;
+    public static final double EXTEND  = 5 * LIFT_TICKS_PER_DEGREE;
     public static final double  RETRACT = 0 * LIFT_TICKS_PER_DEGREE;
 
     /* A number in degrees that the triggers can adjust the arm position by */
@@ -148,7 +148,7 @@ public class RobotHardware {
 
         /* Make sure that the intake is off, and the wrist is folded in. */
         intake.setPower(INTAKE_OFF);
-        //wrist.setPosition(WRIST_FOLDED_IN);
+        wrist.setPosition(WRIST_FOLDED_IN);
 
         /*Define and Initialize new arm extension motor*/
         liftDrive.setTargetPosition(0);
