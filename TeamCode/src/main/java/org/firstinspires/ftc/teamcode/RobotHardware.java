@@ -38,13 +38,13 @@ public class RobotHardware {
    First, we have an external 20t:100t (5:1) reduction created by two spur gears.
    But we also have an internal gear reduction in our motor.
    The motor we use for this arm is a 60RPM Yellow Jacket. Which has an internal gear
-   reduction of ~99.5:1. (more precisely it is 2486883/25000:1)
+   reduction of ~99.5:1. (more precisely it is 13904/261:1)
    We can multiply these two ratios together to get our final reduction.
    The motor's encoder counts 28 times per rotation. So in total you should see about 7458.08
    counts per rotation of the arm. We divide that by 360 to get the counts per degree. */
     public static final double ARM_TICKS_PER_DEGREE =
             28 // number of encoder ticks per rotation of the bare motor
-                    * 2486883.0 / 25000.0 //This is the exact gear ratio of the 99.5:1 Yellow Jacket gearbox
+                    * 13904.0 / 261.0 //This is the exact gear ratio of the 99.5:1 Yellow Jacket gearbox
                     * 100.0 / 20.0 // This is the external gear reduction, a 20T pinion gear that drives a 100T hub-mount gear
                     * 1/360.0; // we want ticks per degree, not per rotation
 
